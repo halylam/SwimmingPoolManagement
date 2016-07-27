@@ -55,6 +55,7 @@ and open the template in the editor.
                         if ($cardItem["longTerm"] == 1 && $cardItem["remainTimes"] == 0) {
                             echo("<div class='alert alert-danger'><strong>Lỗi!</strong> Thẻ dài hạn đã hết lượt quẹt thẻ.!</div>");
                         } else {
+                            date_default_timezone_set("Asia/Bangkok");
                             $date = date('Y-m-d H:i:s');
                             DBUtil::getInstance()->insertTransaction($cardCode, $cardItem["typeName"], $cardItem["price"], $date, $login);
                             if ($cardItem["longTerm"] == 1) {
@@ -63,7 +64,7 @@ and open the template in the editor.
                             echo("<div  class='alert alert-info'><h3><center><strong>THÀNH CÔNG!</strong> Loại Thẻ: ".$cardItem["typeName"]." - Mệnh Giá: ".$cardItem["price"]."</center></h3></div>");
                         }
                     } else {
-                        echo("<div class='alert alert-danger'><h3><center><strong>Lỗi!</strong> Thẻ chưa được đăng ký trong hệ thông!</center></h3></div>");
+                        echo("<div class='alert alert-danger'><h3><center><strong>Lỗi!</strong> Thẻ chưa được đăng ký trong hệ thống!</center></h3></div>");
                     }
                 }
                 ?>
