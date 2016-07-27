@@ -46,7 +46,7 @@ and open the template in the editor.
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="typeName">Tên Loại Thẻ<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="typeName" value="<?php echo $cardTypeItem["typeName"]; ?>" />
+                        <input type="text" readonly="true" class="form-control" name="typeName" value="<?php echo $cardTypeItem["typeName"]; ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -71,13 +71,7 @@ and open the template in the editor.
             if ($_POST['typeName'] == "") {
                 $typeNameIsEmpty = true;
                 $mess = $mess . "<br/>Tên loại thẻ bắt buộc nhập ";
-            } else {
-                $cardTypeExisted = DBUtil::getInstance()->checkCardTypeExisted($_POST['typeName']);
-                if ($cardTypeExisted != null) {
-                    $typeNameIsEmpty = true;
-                    $mess = $mess . "<br/>Tên loại thẻ đã tồn tại ";
-                }
-            }
+            } 
             if ($_POST['price'] == "") {
                 $priceIsEmpty = true;
                 $mess = $mess . "<br/>Giá bắt buộc nhập ";

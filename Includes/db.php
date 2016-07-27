@@ -9,6 +9,11 @@ class DBUtil extends mysqli {
     private $pass = "root1";
     private $dbName = "swim_pool_manage";
     private $dbHost = "localhost";
+    
+//    private $user = 'u933279007_root1';
+//    private $pass = '123456';
+//    private $dbName = 'u933279007_swim';
+//    private $dbHost = 'mysql.hostinger.vn';
 
     //This method must be static, and must return an instance of the object if the object
     //does not already exist.
@@ -152,30 +157,30 @@ class DBUtil extends mysqli {
     public function insertCardType($typeName, $price) {
         $typeName = $this->real_escape_string($typeName);
         $price = $this->real_escape_string($price);
-        $this->query("INSERT cardType (typeName, price) VALUES ('" . $typeName . "', '" . $price . "')");
+        $this->query("INSERT cardtype (typeName, price) VALUES ('" . $typeName . "', '" . $price . "')");
     }
 
     public function updateCardType($idCardType, $typeName, $price) {
         $typeName = $this->real_escape_string($typeName);
         $price = $this->real_escape_string($price);
-        $this->query("UPDATE cardType SET typeName = '" . $typeName . "', price='" . $price . "' WHERE idCardType=" . $idCardType);
+        $this->query("UPDATE cardtype SET typeName = '" . $typeName . "', price='" . $price . "' WHERE idCardType=" . $idCardType);
     }
 
     public function deleteCardType($idCardType) {
-        $this->query("DELETE FROM cardType WHERE idCardType = " . $idCardType);
+        $this->query("DELETE FROM cardtype WHERE idCardType = " . $idCardType);
     }
 
     public function getListCardType() {
-        return $this->query("SELECT * FROM cardType");
+        return $this->query("SELECT * FROM cardtype");
     }
 
     public function getCardTypeDetail($idCardType) {
-        $result = $this->query("SELECT * FROM cardType WHERE idCardType=" . $idCardType);
+        $result = $this->query("SELECT * FROM cardtype WHERE idCardType=" . $idCardType);
         return $result->fetch_assoc();
     }
     
     public function checkCardTypeExisted($typeName) {
-        $result = $this->query("SELECT * FROM cardType WHERE typeName='" . $typeName . "'");
+        $result = $this->query("SELECT * FROM cardtype WHERE typeName='" . $typeName . "'");
         if (!$result) {
             throw new Exception("Database Error [{$this->errno}] {$this->error}");
         }
