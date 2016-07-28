@@ -62,4 +62,10 @@ and open the template in the editor.
     }
     ?>
 </body>
+<script>
+         $(document).ready(function () {
+            $("#login").focus();
+        });
+    </script>
+
 </html>

@@ -61,7 +61,7 @@ and open the template in the editor.
                             if ($cardItem["longTerm"] == 1) {
                                 DBUtil::getInstance()->minusRemainTimes($cardCode);
                             }
-                            echo("<div  class='alert alert-info'><h3><center><strong>THÀNH CÔNG!</strong> Loại Thẻ: ".$cardItem["typeName"]." - Mệnh Giá: ".$cardItem["price"]."</center></h3></div>");
+                            echo("<div  class='alert alert-info'><h3><center><strong>THÀNH CÔNG!</strong> Loại Thẻ: <strong>".$cardItem["typeName"]."</strong> - Mệnh Giá: <strong>".number_format($cardItem["price"], 0, '.', ',')." VNĐ</strong></center></h3></div>");
                         }
                     } else {
                         echo("<div class='alert alert-danger'><h3><center><strong>Lỗi!</strong> Thẻ chưa được đăng ký trong hệ thống!</center></h3></div>");
