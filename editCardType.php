@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $cardTypeItem = array("idCardType" => $_POST['idCardType'],
         "typeName" => $_POST['typeName'],
         "price" => $_POST['price']);
+    
 }
 ?>
 <!DOCTYPE html>
@@ -43,10 +44,12 @@ and open the template in the editor.
         <div style="width: 90%">
             <form class="form-horizontal" role="form" action="editCardType.php" method="POST" >
                 <input type="hidden" name="idCardType" value="<?php echo $cardTypeItem["idCardType"]; ?>" />
+                <input type="hidden" name="typeNameOld" value="<?php echo $cardTypeItem["typeName"]; ?>" />
+                <input type="hidden" name="priceOld" value="<?php echo $cardTypeItem["price"]; ?>" />
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="typeName">Tên Loại Thẻ<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
-                        <input type="text" readonly="true" class="form-control" name="typeName" value="<?php echo $cardTypeItem["typeName"]; ?>" />
+                        <input type="text" class="form-control" name="typeName" value="<?php echo $cardTypeItem["typeName"]; ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -71,14 +74,22 @@ and open the template in the editor.
             if ($_POST['typeName'] == "") {
                 $typeNameIsEmpty = true;
                 $mess = $mess . "<br/>Tên loại thẻ bắt buộc nhập ";
-            } 
+            } else {
+                if ($_POST['typeName'] != $_POST['typeNameOld']) {
+                    $cardTypeExisted = DBUtil::getInstance()->checkCardTypeExisted($_POST['typeName']);
+                    if ($cardTypeExisted != null) {
+                        $typeNameIsEmpty = true;
+                        $mess = $mess . "<br/>Tên loại thẻ đã tồn tại ";
+                    }
+                }
+            }
             if ($_POST['price'] == "") {
                 $priceIsEmpty = true;
                 $mess = $mess . "<br/>Giá bắt buộc nhập ";
             }
 
             if (!$typeNameIsEmpty && !$priceIsEmpty ) {
-                DBUtil::getInstance()->updateCardType($_POST["idCardType"], $_POST["typeName"], str_replace(',', '', $_POST["price"]));
+                DBUtil::getInstance()->updateCardType($_POST["idCardType"], $_POST["typeName"], str_replace(',', '', $_POST["price"]), $_POST["typeNameOld"], $_POST["priceOld"]);
                 header('Location: listCardType.php');
                 exit;
             } else {

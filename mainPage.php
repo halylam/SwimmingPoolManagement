@@ -53,9 +53,8 @@ and open the template in the editor.
                     $cardItem = DBUtil::getInstance()->getCardDetailByCode($cardCode);
                     if ($cardItem != null) {
                         if ($cardItem["longTerm"] == 1 && $cardItem["remainTimes"] == 0) {
-                            echo("<div class='alert alert-danger'><strong>Lỗi!</strong> Thẻ dài hạn đã hết lượt quẹt thẻ.!</div>");
+                            echo("<div class='alert alert-danger'><h3><center><strong>Lỗi!</strong> Thẻ dài hạn đã hết lượt quẹt thẻ.!</center></h3></div>");
                         } else {
-                            date_default_timezone_set("Asia/Bangkok");
                             $date = date('Y-m-d H:i:s');
                             DBUtil::getInstance()->insertTransaction($cardCode, $cardItem["typeName"], $cardItem["price"], $date, $login);
                             if ($cardItem["longTerm"] == 1) {
@@ -76,8 +75,8 @@ and open the template in the editor.
         <input class="btn btn-success" type="button" value="Thông Tin Cá Nhân" onClick="document.location.href = 'editUser.php?idUser=<?php echo $idUser; ?>&source=1'" />      
         <input class="btn btn-success" type="button" value="Danh sách loại thẻ" onClick="document.location.href = 'listCardType.php'" />     
         <input class="btn btn-success" type="button" value="Danh sách thẻ" onClick="document.location.href = 'listCard.php'" />     
+        <input class="btn btn-success" type="button" value="Thống kê báo cáo" onClick="document.location.href = 'thongke.php'" />      
         <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button'; else echo 'hidden'; ?>" value="Danh sách nhân viên" onClick="document.location.href = 'listUser.php'" />     
-        <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button'; else echo 'hidden'; ?>" value="Thống kê báo cáo" onClick="document.location.href = 'thongke.php'" />      
         </center>
     </body>
     

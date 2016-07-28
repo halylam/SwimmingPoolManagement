@@ -13,7 +13,6 @@ if (isset($_SESSION['userID'])) {
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $loginFilter = '';
     $typeNameFilter = '';
-    date_default_timezone_set("Asia/Bangkok");
     $fromFilter = date('d-m-Y 00:00');
     $toFilter = date('d-m-Y 23:59');
 }

@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set("Asia/Bangkok");
 class DBUtil extends mysqli {
 
     // single instance of self shared among all instances
@@ -129,7 +129,7 @@ class DBUtil extends mysqli {
         if ($to != null && $to != '') {
             $query .= " and tranDate <= '" . $to . "'";
         }
-        $query .= " LIMIT 1000";
+        $query .= " ORDER BY tranDate DESC LIMIT 1000 ";
         return $this->query($query);
     }
     
@@ -160,10 +160,15 @@ class DBUtil extends mysqli {
         $this->query("INSERT cardtype (typeName, price) VALUES ('" . $typeName . "', '" . $price . "')");
     }
 
-    public function updateCardType($idCardType, $typeName, $price) {
+    public function updateCardType($idCardType, $typeName, $price, $typeNameOld, $priceOld) {
         $typeName = $this->real_escape_string($typeName);
+        $typeNameOld = $this->real_escape_string($typeNameOld);
         $price = $this->real_escape_string($price);
+        $priceOld = $this->real_escape_string($priceOld);
         $this->query("UPDATE cardtype SET typeName = '" . $typeName . "', price='" . $price . "' WHERE idCardType=" . $idCardType);
+        if (($price != $priceOld) || ($typeName != $typeNameOld)) {
+            $this->query("UPDATE card SET typeName = '" . $typeName . "', price='" . $price . "' WHERE idCardType=" . $idCardType);
+        }
     }
 
     public function deleteCardType($idCardType) {
