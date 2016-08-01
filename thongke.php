@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $toFilter = $_POST["toDate"];
 }
 ?>
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -44,7 +45,7 @@ and open the template in the editor.
                     <label class="control-label col-sm-2" for="login">Mã nhân viên: </label>
                     <div class="col-sm-10" style="width: 15%">
                         <select class="selectpicker"  name='login' id='login' value='<?php echo $loginFilter ?>'>
-                            <option value=''>Chọn</option>
+                            <option value=''>Tất cả</option>
                             <?php
                             $listUser = DBUtil::getInstance()->getListUser();
                             while ($row = mysqli_fetch_array($listUser)) {
@@ -64,7 +65,7 @@ and open the template in the editor.
                     <label class="control-label col-sm-2" for="pass">Loại thẻ:</label>
                     <div class="col-sm-10" style="width: 15%"> 
                         <select class="selectpicker"  name='typeName' id='typeName' value='<?php echo $typeNameFilter ?>'>
-                            <option value=''>Chọn</option>
+                            <option value=''>Tất cả</option>
                             <?php
                             $listCardType = DBUtil::getInstance()->getListCardType();
                             while ($row = mysqli_fetch_array($listCardType)) {
@@ -99,10 +100,11 @@ and open the template in the editor.
                     <div class="col-sm-offset-2 col-sm-10" style="width: 55%">
                         <button type="submit" class="btn btn-success">Tìm Kiếm</button> 
                         <input type="button" class="btn btn-success" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
+                        <button type="button" class="btn btn-success" onclick="showChiTiet()">Báo cáo chi tiết</button> 
                     </div>
                 </div>
                 
-                 <div style="width: 65%">
+                <div style="width: 100%; " >
                      <?php
                             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 $loginFilter = $_POST["login"];
@@ -117,13 +119,23 @@ and open the template in the editor.
                                 } else {
                                     $toFilter = date('Y-m-d H:i:s', strtotime($_POST["toDate"]));
                                 }
+                                $tempInfo = "";
+                                $totalNum = 0;
+                                $totalPrice = 0;
                                 $listTransInfo = DBUtil::getInstance()->getListTransactionInfo($loginFilter, $typeNameFilter, $fromFilter, $toFilter);
-                                echo("<div class='alert alert-info'><h3>Tổng Lượt Khách= <strong>".number_format($listTransInfo['totalCount'], 0, '.', ',')."</strong> -/- Tổng Doanh Thu= <strong>".number_format($listTransInfo['totalPrice'], 0, '.', ',')." VNĐ</strong> </h3></div>");
+                                while ($row = mysqli_fetch_array($listTransInfo)) {
+                                    $tempInfo .= "<div style='width: 20%; display: inline-block; margin-left: 5px;' class='alert alert-info'>Loại Thẻ: <font size='4'><strong>" . $row['typeName'] . "</strong></font><hr style='margin: 5px; background-color: #419641; height: 1px;'>Tổng Lượt: <font size='4'><strong>" . number_format($row['totalCount'], 0, '.', ',') . "</strong></font></br>Tổng Tiền: <font size='4'><strong>" . number_format($row['totalPrice'], 0, '.', ',') . " VNĐ</strong></font></div>";
+                                    $totalNum += $row['totalCount'];
+                                    $totalPrice += $row['totalPrice'];
+                                }
+                                mysqli_free_result($listTransInfo);
+                                echo("<div style='width: 25%' class='alert alert-info'>Tổng Lượt Khách</br><font color='red' size='5'><strong>".number_format($totalNum, 0, '.', ',')."</strong></font></br>Tổng Doanh Thu</br><font color='red' size='5'><strong>".number_format($totalPrice, 0, '.', ',')." VNĐ</strong></font></div>");
+                                echo("<div class='row'>".$tempInfo."</div>");
                             }
                             ?>
                  </div>
 
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="display: none;"  id="bcctTable">
                     <table id="example" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -187,6 +199,9 @@ and open the template in the editor.
         function formatNumber(obj) {
             var tmp = replaceAll(obj.value.toString(), ',', '');
             obj.value = tmp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        function showChiTiet() {
+            $('#bcctTable').css("display","block");
         }
     </script>
 </html>

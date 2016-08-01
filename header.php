@@ -13,11 +13,13 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
         <link rel="stylesheet" type="text/css"  href="css/bootstrap-select.min.css"/>
         <link rel="stylesheet" type="text/css"  href="css/jquery.dataTables.min.css"/>
+        <!--<link rel="stylesheet" type="text/css" href="css/fileinput.min.css" />-->
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-select.js"></script>
         <script src="js/jquery.datetimepicker.full.min.js"></script>
         <script src="js/jquery.dataTables.min.js"></script>
+        <!--<script src="js/fileinput.min.js"></script>-->
         
     </head>
     <body>

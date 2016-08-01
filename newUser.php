@@ -29,7 +29,7 @@ and open the template in the editor.
         <h2 style="color: #188420;"><center>THÔNG TIN CÁ NHÂN</center></h2>
 
         <div style="width: 90%">
-            <form class="form-horizontal" role="form" action="newUser.php" method="POST" >
+            <form class="form-horizontal" role="form" action="newUser.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="login">Tên Đăng Nhập<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
@@ -77,6 +77,14 @@ and open the template in the editor.
                         <input type="text" class="form-control" name="email" value="" />
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="avatar">Ảnh cá nhân:</label>
+                    <div class="col-sm-10">
+                        <input type="hidden" class="form-control" name="avatar" value="" />
+                        <input id="fileToUpload" type="file" name="fileToUpload" class="file">
+                    </div>
+                </div>
 
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
@@ -91,6 +99,24 @@ and open the template in the editor.
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $mess = '';
+            $target_dir = "uploads/";
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir);
+            }
+            $uploadOk = 1;
+            if ($_FILES["fileToUpload"]["name"] != '') {
+                $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                $_POST["avatar"] = $target_file;
+                $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+                if ($_FILES["fileToUpload"]["size"] > 1024000) {
+                    $mess = "Dung lượng file quá lơn. File phải nhỏ hơn 1Mb.";
+                    $uploadOk = 0;
+                }
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                    $mess = "chỉ JPG, JPEG, PNG, GIF files được chấp nhận.";
+                    $uploadOk = 0;
+                }
+            }
             if ($_POST['login'] == "") {
                 $loginIsEmpty = true;
                 $mess = $mess . "<br/>Tên đăng nhập bắt buộc nhập ";
@@ -112,8 +138,9 @@ and open the template in the editor.
                 }
             }
 
-            if (!$loginIsEmpty && !$passIsEmpty && !$invalidEmail) {
-                DBUtil::getInstance()->insertUser($_POST["login"], $_POST["pass"], $_POST["fullname"], $_POST["phone"], $_POST["address"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["email"]);
+            if (!$loginIsEmpty && !$passIsEmpty && !$invalidEmail && $uploadOk == 1) {
+                move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+                DBUtil::getInstance()->insertUser($_POST["login"], $_POST["pass"], $_POST["fullname"], $_POST["phone"], $_POST["address"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["email"], $_POST["avatar"]);
                 header('Location: listUser.php');
                 exit;
             } else {

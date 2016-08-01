@@ -68,7 +68,7 @@ class DBUtil extends mysqli {
         return $result->fetch_assoc();
     }
 
-    public function insertUser($login, $pass, $fullname, $phone, $address, $birthday, $email) {
+    public function insertUser($login, $pass, $fullname, $phone, $address, $birthday, $email, $avatar) {
         $login = $this->real_escape_string($login);
         $pass = $this->real_escape_string($pass);
         $fullname = $this->real_escape_string($fullname);
@@ -76,12 +76,13 @@ class DBUtil extends mysqli {
         $address = $this->real_escape_string($address);
         $birthday = $this->real_escape_string($birthday);
         $email = $this->real_escape_string($email);
+        $avatar = $this->real_escape_string($avatar);
 
-        $this->query("INSERT user (login, pass, fullname, phone, address, birthday, email) VALUES "
-                . " ('" . $login . "', '" . $pass . "', '" . $fullname . "', '" . $phone . "', '" . $address . "', '" . $birthday . "', '" . $email . "')");
+        $this->query("INSERT user (login, pass, fullname, phone, address, birthday, email, avatar) VALUES "
+                . " ('" . $login . "', '" . $pass . "', '" . $fullname . "', '" . $phone . "', '" . $address . "', '" . $birthday . "', '" . $email . "', '" . $avatar . "')");
     }
 
-    public function updateUser($idUser, $login, $pass, $fullname, $phone, $address, $birthday, $email) {
+    public function updateUser($idUser, $login, $pass, $fullname, $phone, $address, $birthday, $email, $avatar) {
         $login = $this->real_escape_string($login);
         $pass = $this->real_escape_string($pass);
         $fullname = $this->real_escape_string($fullname);
@@ -89,9 +90,10 @@ class DBUtil extends mysqli {
         $address = $this->real_escape_string($address);
         $birthday = $this->real_escape_string($birthday);
         $email = $this->real_escape_string($email);
+        $avatar = $this->real_escape_string($avatar);
 
         $this->query("UPDATE user SET login = '" . $login . "', pass='" . $pass . "', fullname='" . $fullname .
-                "', phone='" . $phone . "', address='" . $address . "', birthday='" . $birthday . "', email='" . $email . "' WHERE idUser=" . $idUser);
+                "', phone='" . $phone . "', address='" . $address . "', birthday='" . $birthday . "', email='" . $email . "', avatar='" . $avatar . "' WHERE idUser=" . $idUser);
     }
 
     public function deleteUser($idUser) {
@@ -134,7 +136,7 @@ class DBUtil extends mysqli {
     }
     
     public function getListTransactionInfo($login, $typeName, $from, $to) {
-        $query = "SELECT count(*) as totalCount, sum(price) as totalPrice FROM transaction WHERE 1=1";
+        $query = "SELECT count(*) as totalCount, sum(price) as totalPrice, typeName FROM transaction WHERE 1=1";
         if ($login != null && $login != '') {
             $query .= " and login='" . $login . "'";
         }
@@ -147,9 +149,10 @@ class DBUtil extends mysqli {
         if ($to != null && $to != '') {
             $query .= " and tranDate <= '" . $to . "'";
         }        
-        $query .= " LIMIT 1000";
-        $result = $this->query($query);
-        return $result->fetch_assoc();
+        $query .= " group by typeName ";
+        return $this->query($query);
+//        $result = $this->query($query);
+//        return $result->fetch_assoc();
     }
 
     //-------------------------END TRANSACTION-----------------------------//

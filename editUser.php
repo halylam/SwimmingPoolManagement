@@ -31,7 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         "phone" => $_POST['phone'],
         "address" => $_POST['address'],
         "birthday" => $_POST['birthday'],
-        "email" => $_POST['email']);
+        "email" => $_POST['email'],
+        "avatar" => $_POST['avatar']);
+    
     $source = $_POST['source'];
 }
 ?>
@@ -50,9 +52,17 @@ and open the template in the editor.
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>THÔNG TIN CHI TIẾT NHÂN VIÊN</center></h2>
         <div style="width: 90%">
-            <form class="form-horizontal" role="form" action="editUser.php" method="POST" >
+            <form class="form-horizontal" role="form" action="editUser.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="source" value="<?php echo $source; ?>" />
                 <input type="hidden" name="idUser" value="<?php echo $userItem["idUser"]; ?>" />
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="avatar">Ảnh cá nhân:</label>
+                    <div class="col-sm-10">
+                        <input type="hidden" class="form-control" name="avatar" value="<?php echo $userItem["avatar"]; ?>" />
+                        <img src="<?php echo $userItem["avatar"]; ?>" style="width:150px;height:110px;">
+                        <input id="fileToUpload" type="file" name="fileToUpload" class="file">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="login">Tên Đăng Nhập<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
@@ -100,7 +110,7 @@ and open the template in the editor.
                         <input type="text" class="form-control" name="email" value="<?php echo $userItem["email"]; ?>" />
                     </div>
                 </div>
-
+                
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success">Lưu chỉnh sửa</button> 
@@ -113,6 +123,25 @@ and open the template in the editor.
         /** Check that the page was requested from itself via the POST method. */
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $mess = '';
+            $target_dir = "uploads/";
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir);
+            }
+            $uploadOk = 1;
+            if ($_FILES["fileToUpload"]["name"] != '') {
+                $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                $_POST["avatar"] = $target_file;
+                $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+                if ($_FILES["fileToUpload"]["size"] > 1024000) {
+                    $mess = "Dung lượng file quá lơn. File phải nhỏ hơn 1Mb.";
+                    $uploadOk = 0;
+                }
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                    $mess = "chỉ JPG, JPEG, PNG, GIF files được chấp nhận.";
+                    $uploadOk = 0;
+                }
+            }
+            
             if ($_POST['login'] == "") {
                 $loginIsEmpty = true;
                 $mess = $mess . "<br/>Tên đăng nhập bắt buộc nhập ";
@@ -128,8 +157,9 @@ and open the template in the editor.
                 }
             }
 
-            if (!$loginIsEmpty && !$passIsEmpty && !$invalidEmail) {
-                DBUtil::getInstance()->updateUser($_POST["idUser"], $_POST["login"], $_POST["pass"], $_POST["fullname"], $_POST["phone"], $_POST["address"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["email"]);
+            if (!$loginIsEmpty && !$passIsEmpty && !$invalidEmail && $uploadOk == 1) {
+                move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+                DBUtil::getInstance()->updateUser($_POST["idUser"], $_POST["login"], $_POST["pass"], $_POST["fullname"], $_POST["phone"], $_POST["address"], date('Y-m-d H:i:s', strtotime($_POST["birthday"])), $_POST["email"], $_POST["avatar"]);
                 if ($_POST["source"] == 1)
                     header('Location: mainPage.php');
                 if ($_POST["source"] == 2)

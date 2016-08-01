@@ -38,7 +38,8 @@ and open the template in the editor.
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
                 <th>Ngày sinh</th>
-
+                <th>Ảnh cá nhân</th>
+                <th>Thao tác</th>
             </tr>
             <?php
                 $listUser = DBUtil::getInstance()->getListUser();
@@ -46,13 +47,14 @@ and open the template in the editor.
 
             while ($row = mysqli_fetch_array($listUser)) {
                 $userSelectedId = $row["idUser"];
-                echo "<tr><td>" . htmlentities($row["login"]) . "</td>";
-                echo "<td>" . htmlentities($row["fullname"]) . "</td>";
-                echo "<td>" . htmlentities($row["email"]) . "</td>";
-                echo "<td>" . htmlentities($row["phone"]) . "</td>";
-                echo "<td>" . htmlentities($row["address"]) . "</td>";
-                echo "<td>" . date('d-m-Y', strtotime(htmlentities($row["birthday"]))) . "</td>";
-                echo "<td><a href='editUser.php?idUser=$userSelectedId&source=2'><i class='glyphicon glyphicon-pencil'></i></a>"
+                echo "<tr><td style='vertical-align: middle;'>" . htmlentities($row["login"]) . "</td>";
+                echo "<td style='vertical-align: middle;'>" . htmlentities($row["fullname"]) . "</td>";
+                echo "<td style='vertical-align: middle;'>" . htmlentities($row["email"]) . "</td>";
+                echo "<td style='vertical-align: middle;'>" . htmlentities($row["phone"]) . "</td>";
+                echo "<td style='vertical-align: middle;'>" . htmlentities($row["address"]) . "</td>";
+                echo "<td style='vertical-align: middle;'>" . date('d-m-Y', strtotime(htmlentities($row["birthday"]))) . "</td>";
+                echo "<td style='vertical-align: middle;'><img src='" . htmlentities($row["avatar"]) . "' style='width:100px;height:60px;'</td>";
+                echo "<td style='vertical-align: middle;'><a href='editUser.php?idUser=$userSelectedId&source=2'><i class='glyphicon glyphicon-pencil'></i></a>"
                         . "<a href='deleteUser.php?idUser=" . $userSelectedId . "' onClick=\"javascript:return confirm('Bạn có chắc chắn xóa nhân viên ko?');\">"
                         . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td><tr>";
             }
