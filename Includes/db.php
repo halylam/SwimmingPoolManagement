@@ -239,4 +239,59 @@ class DBUtil extends mysqli {
     }
 
     //-------------------------END CARDTYPE-----------------------------//
+    
+    public function insertTeacher($name) {
+        $name = $this->real_escape_string($name);
+        $this->query("INSERT teacher (name) VALUES ('" . $name . "')");
+    }
+
+    public function updateTeacher($idTeacher, $name) {
+        $name = $this->real_escape_string($name);
+        $this->query("UPDATE teacher SET name = '" . $name . "' WHERE idTeacher=" . $idTeacher);
+    }
+
+    public function deleteTeacher($idTeacher) {
+        $this->query("DELETE FROM teacher WHERE idTeacher = " . $idTeacher);
+    }
+    
+    public function getListTeacher() {
+        return $this->query("SELECT * FROM teacher");
+    }
+
+    public function getTeacherDetail($idTeacher) {
+        $result = $this->query("SELECT * FROM teacher WHERE idTeacher=" . $idTeacher);
+        return $result->fetch_assoc();
+    }
+    
+    //-------------------------END TEACHER-----------------------------//
+    
+    public function insertTeacherPlan($idTeacher, $studentName, $endDate, $fee, $rate) {
+        $this->query("INSERT teacherplan (idTeacher, studentName, endDate, fee, rate) VALUES ('" . $idTeacher . "', '".$studentName."', '".$endDate."', '".$fee."', '".$rate."')");
+    }
+
+    public function updateTeacherPlan($id, $idTeacher, $studentName, $endDate, $fee, $rate) {
+        $this->query("UPDATE teacherplan SET idTeacher=".$idTeacher.", studentName = '" . $studentName . "', endDate = '" . $endDate . "', fee = '" . $fee . "'"
+                . ", rate = '" . $rate . "' WHERE id=" . $id);
+    }
+
+    public function deleteTeacherPlan($id) {
+        $this->query("DELETE FROM teacherplan WHERE id = " . $id);
+    }
+
+    public function getListTeacherPlan() {
+        return $this->query("SELECT tp.*, t.name FROM teacherplan tp LEFT JOIN teacher t on tp.idTeacher = t.idTeacher");
+    }
+
+    public function getTeacherPlanDetail($id) {
+        $result = $this->query("SELECT * FROM teacherplan WHERE id=" . $id);
+        return $result->fetch_assoc();
+    }
+    
+    public function getTeacherPlanInfo($month, $year) {
+        return $this->query("select sum(tp.fee*tp.rate/100) as total, t.name as name, count(*) as amount  FROM teacherplan tp"
+                . " LEFT JOIN teacher t ON tp.idTeacher = t.idTeacher where MONTH(tp.endDate) = ".$month." and YEAR(tp.endDate) = ".$year." group by tp.idTeacher");
+    }
+    
+    
+    //-------------------------END TEACHER PLAN-----------------------------//
 }

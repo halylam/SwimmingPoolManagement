@@ -97,7 +97,7 @@ and open the template in the editor.
                 </div>
 
                 <div class="form-group"> 
-                    <div class="col-sm-offset-2 col-sm-10" style="width: 55%">
+                    <div class="col-sm-offset-2 col-sm-10" style="width: 65%">
                         <button type="submit" class="btn btn-success">Tìm Kiếm</button> 
                         <input type="button" class="btn btn-success" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
                         <button type="button" class="btn btn-success" onclick="showChiTiet()">Báo cáo chi tiết</button> 

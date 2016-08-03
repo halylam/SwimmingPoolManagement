@@ -54,7 +54,7 @@ and open the template in the editor.
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="idCardType">Tên Loại Thẻ<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
-                        <select class="selectpicker"  name='idCardType' id='idCardType' value='<?php echo $appItem["idCardType"]; ?>'>
+                        <select class="selectpicker"  name='idCardType' id='idCardType' value='<?php echo $cardItem["idCardType"]; ?>'>
                             <option value=''>Chọn</option>
                             <?php
                             $listCardType = DBUtil::getInstance()->getListCardType();

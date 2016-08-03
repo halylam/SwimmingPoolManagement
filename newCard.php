@@ -55,7 +55,7 @@ and open the template in the editor.
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="longTerm">Thẻ Dài Hạn:</label>
                     <div class="col-sm-10"> 
-                        <input type="checkbox" name="longTerm" value="<?php echo $cardItem['longTerm']; ?>" />
+                        <input type="checkbox" name="longTerm" value="" />
                     </div>
                 </div>
                 
