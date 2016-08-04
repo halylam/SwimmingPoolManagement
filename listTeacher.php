@@ -43,7 +43,7 @@ and open the template in the editor.
             while ($row = mysqli_fetch_array($listTeacher)) {
                 $idTeacher = $row["idTeacher"];
                 echo "<tr><td>" . htmlentities($idTeacher) . "</td>";
-                echo "<td>" . htmlentities($row["name"]) . "</td>";
+                echo "<td>" . htmlentities($row["name"], ENT_QUOTES, 'utf-8') . "</td>";
                 echo "<td><a href='editTeacher.php?idTeacher=$idTeacher'><i class='glyphicon glyphicon-pencil'></i></a>"
                     . "<a href='deleteTeacher.php?idTeacher=" . $idTeacher . "' onClick=\"javascript:return confirm('Bạn có chắc chắn xóa giáo viên ko?');\">"
                         . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td><tr>";

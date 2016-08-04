@@ -65,7 +65,7 @@ and open the template in the editor.
                                 } else {
                                     $selected = '';
                                 }
-                                echo "<option value=" . htmlentities($row["idCardType"]) . $selected . ">" . htmlentities($row["typeName"]) . "</option>\n";
+                                echo "<option value=" . htmlentities($row["idCardType"]) . $selected . ">" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</option>\n";
 
                             }
                             mysqli_free_result($listCardType);

@@ -74,7 +74,7 @@ and open the template in the editor.
                                 } else {
                                     $selected = '';
                                 }
-                                echo "<option value='" . htmlentities($row["typeName"]) ."'".$selected.">" . htmlentities($row["typeName"]) . "</option>\n";
+                                echo "<option value='" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') ."'".$selected.">" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</option>\n";
                             }
                             mysqli_free_result($listCardType);
                             ?>
@@ -165,7 +165,7 @@ and open the template in the editor.
                                 $listTrans = DBUtil::getInstance()->getListTransaction($loginFilter, $typeNameFilter, $fromFilter, $toFilter);
                                 while ($row = mysqli_fetch_array($listTrans)) {
                                     echo "<tr><td>" . htmlentities($row["cardCode"]) . "</td>";
-                                    echo "<td>" . htmlentities($row["typeName"]) . "</td>";
+                                    echo "<td>" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</td>";
                                     echo "<td>" . htmlentities($row["price"]) . "</td>";
                                     echo "<td>" . date('d-m-Y H:i:s', strtotime(htmlentities($row["tranDate"]))) . "</td>";
                                     echo "<td>" . htmlentities($row["login"]) . "</td></tr>";

@@ -55,8 +55,8 @@ and open the template in the editor.
 
                     while ($row = mysqli_fetch_array($listTeacherPlan)) {
                         $id = $row["id"];
-                        echo "<tr><td>" . htmlentities($row["name"]) . "</td>";
-                        echo "<td>" . htmlentities($row["studentName"]) . "</td>";
+                        echo "<tr><td>" . htmlentities($row["name"], ENT_QUOTES, 'utf-8') . "</td>";
+                        echo "<td>" . htmlentities($row["studentName"], ENT_QUOTES, 'utf-8') . "</td>";
                         echo "<td>" . date('d-m-Y H:i:s', strtotime(htmlentities($row["endDate"]))) . "</td>";
                         echo "<td>" . number_format($row['fee'], 0, '.', ',') . "</td>";
                         echo "<td>" . htmlentities($row["rate"]) . "</td>";

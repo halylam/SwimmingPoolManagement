@@ -45,7 +45,7 @@ and open the template in the editor.
                             <?php
                             $listCardType = DBUtil::getInstance()->getListCardType();
                             while ($row = mysqli_fetch_array($listCardType)) {
-                                echo "<option value=" . htmlentities($row["idCardType"]) . $selected . ">" . htmlentities($row["typeName"]) . "</option>\n";
+                                echo "<option value=" . htmlentities($row["idCardType"]) . $selected . ">" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</option>\n";
                             }
                             mysqli_free_result($listCardType);
                             ?>

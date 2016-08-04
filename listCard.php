@@ -56,7 +56,7 @@ and open the template in the editor.
                     while ($row = mysqli_fetch_array($listCard)) {
                         $idCard = $row["idCard"];
                         echo "<tr><td>" . htmlentities($row["cardCode"]) . "</td>";
-                        echo "<td>" . htmlentities($row["typeName"]) . "</td>";
+                        echo "<td>" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</td>";
                         echo "<td>" . htmlentities($row["price"]) . "</td>";
                         if ($row["longTerm"] == 0) {
                             echo "<td>Không</td>";

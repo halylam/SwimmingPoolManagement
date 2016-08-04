@@ -14,6 +14,11 @@ class DBUtil extends mysqli {
 //    private $pass = '123456';
 //    private $dbName = 'u933279007_swim';
 //    private $dbHost = 'mysql.hostinger.vn';
+//    
+//    private $user = 'd1789p04_uqlhb';
+//    private $pass = 'Q@123Hb16';
+//    private $dbName = 'd1789p04_qlhb';
+//    private $dbHost = '127.0.0.1';
 
     //This method must be static, and must return an instance of the object if the object
     //does not already exist.
@@ -41,7 +46,8 @@ class DBUtil extends mysqli {
             exit('Connect Error (' . mysqli_connect_errno() . ') '
                     . mysqli_connect_error());
         }
-        parent::set_charset('utf-8');
+//        parent::set_charset('utf-8');
+        $this->set_charset("utf8");
     }
 
     public function checkLogin($login, $pass) {

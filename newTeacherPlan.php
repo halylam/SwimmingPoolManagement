@@ -41,7 +41,7 @@ and open the template in the editor.
                             <?php
                             $listTeacher = DBUtil::getInstance()->getListTeacher();
                             while ($row = mysqli_fetch_array($listTeacher)) {
-                                echo "<option value=" . htmlentities($row["idTeacher"]) . $selected . ">" . htmlentities($row["name"]) . "</option>\n";
+                                echo "<option value=" . htmlentities($row["idTeacher"]) . $selected . ">" . htmlentities($row["name"], ENT_QUOTES, 'utf-8') . "</option>\n";
                             }
                             mysqli_free_result($listTeacher);
                             ?>

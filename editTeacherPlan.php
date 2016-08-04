@@ -63,7 +63,7 @@ and open the template in the editor.
                                 } else {
                                     $selected = '';
                                 }
-                                echo "<option value=" . htmlentities($row["idTeacher"]) . $selected . ">" . htmlentities($row["name"]) . "</option>\n";
+                                echo "<option value=" . htmlentities($row["idTeacher"]) . $selected . ">" . htmlentities($row["name"], ENT_QUOTES, 'utf-8') . "</option>\n";
                             }
                             mysqli_free_result($listTeacher);
                             ?>

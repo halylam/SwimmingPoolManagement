@@ -44,7 +44,7 @@ and open the template in the editor.
             while ($row = mysqli_fetch_array($listCardType)) {
                 $idCardType = $row["idCardType"];
                 echo "<tr><td>" . htmlentities($idCardType) . "</td>";
-                echo "<td>" . htmlentities($row["typeName"]) . "</td>";
+                echo "<td>" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</td>";
                 echo "<td>" . htmlentities($row["price"]) . "</td>";
                
                 echo "<td><a href='editCardType.php?idCardType=$idCardType'><i class='glyphicon glyphicon-pencil'></i></a>"
