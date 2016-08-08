@@ -46,7 +46,6 @@ class DBUtil extends mysqli {
             exit('Connect Error (' . mysqli_connect_errno() . ') '
                     . mysqli_connect_error());
         }
-//        parent::set_charset('utf-8');
         $this->set_charset("utf8");
     }
 
@@ -157,8 +156,6 @@ class DBUtil extends mysqli {
         }        
         $query .= " group by typeName ";
         return $this->query($query);
-//        $result = $this->query($query);
-//        return $result->fetch_assoc();
     }
 
     //-------------------------END TRANSACTION-----------------------------//
@@ -244,7 +241,7 @@ class DBUtil extends mysqli {
         return $this->query("UPDATE card SET remainTimes = (remainTimes-1) WHERE cardCode='" . $cardCode . "'");
     }
 
-    //-------------------------END CARDTYPE-----------------------------//
+    //-------------------------END CARD-----------------------------//
     
     public function insertTeacher($name) {
         $name = $this->real_escape_string($name);
@@ -297,7 +294,6 @@ class DBUtil extends mysqli {
         return $this->query("select sum(tp.fee*tp.rate/100) as total, t.name as name, count(*) as amount  FROM teacherplan tp"
                 . " LEFT JOIN teacher t ON tp.idTeacher = t.idTeacher where MONTH(tp.endDate) = ".$month." and YEAR(tp.endDate) = ".$year." group by tp.idTeacher");
     }
-    
     
     //-------------------------END TEACHER PLAN-----------------------------//
 }

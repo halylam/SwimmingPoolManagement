@@ -36,7 +36,7 @@ and open the template in the editor.
                         <input type="text" class="form-control" name="cardCode" value="" id="cardCode"/>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="idCardType">Tên Loại Thẻ<label style="color: red">(*)</label>: </label>
                     <div class="col-sm-10">
@@ -58,7 +58,7 @@ and open the template in the editor.
                         <input type="checkbox" name="longTerm" value="" />
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="remainTimes">Số lần quẹt còn lại:</label>
                     <div class="col-sm-10"> 
@@ -82,13 +82,16 @@ and open the template in the editor.
             if ($_POST['cardCode'] == "") {
                 $cardCodeIsEmpty = true;
                 $mess = $mess . "<br/>Mã vạch thẻ bắt buộc nhập ";
-            } 
+            }
             if ($_POST['idCardType'] == "") {
                 $cardTypeIsEmpty = true;
                 $mess = $mess . "<br/>Loại thẻ bắt buộc nhập ";
-            } 
+            }
             if (!$cardTypeIsEmpty && !$cardCodeIsEmpty) {
-                if(isset($_POST['longTerm'])) $longTerm = 1; else $longTerm = 0;
+                if (isset($_POST['longTerm']))
+                    $longTerm = 1;
+                else
+                    $longTerm = 0;
                 DBUtil::getInstance()->insertCard($_POST["cardCode"], $_POST["idCardType"], $longTerm, $_POST["remainTimes"]);
                 header('Location: listCard.php');
                 exit;
@@ -103,9 +106,18 @@ and open the template in the editor.
             //if the letter is not digit then display error and don't type anything
             if (e.which != 8 && e.which != 46 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 return false;
-            } 
+            }
         });
-        
+
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+
         $("#cardCode").focus();
 
     </script>
