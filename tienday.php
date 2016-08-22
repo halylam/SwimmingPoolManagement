@@ -79,12 +79,17 @@ and open the template in the editor.
                             $monthFilter = $_POST["month"];
                             $yearFilter = $_POST["year"];
                             $tempInfo = "";
+							$totalIncome = 0;
+							$totalAmount = 0;
                             $listTeacherPlanInfo = DBUtil::getInstance()->getTeacherPlanInfo($monthFilter, $yearFilter);
                             while ($row = mysqli_fetch_array($listTeacherPlanInfo)) {
                                 $tempInfo .= "<div style='width: 20%; display: inline-block; margin-left: 5px;' class='alert alert-info'>Giáo Viên: <font size='4'><strong>" . $row['name'] . "</strong></font><hr style='margin: 5px; background-color: #419641; height: 1px;'>Tổng Học Viên: <font size='4'><strong>" . number_format($row['amount'], 0, '.', ',') . "</strong></font></br>Tổng Tiền: <font size='4'><strong>" . number_format($row['total'], 0, '.', ',') . " VNĐ</strong></font></div>";
+								$totalIncome += $row['totalIncome'];
+								$totalAmount += $row['amount'];
                             }
                             mysqli_free_result($listTeacherPlanInfo);
                             if($tempInfo != '') {
+								$tempInfo = "<div style='width: 20%; display: inline-block; margin-left: 5px;' class='alert alert-info'><font size='4' color='red'><strong>Thu nhập từ việc dạy</strong></font><hr style='margin: 5px; background-color: #419641; height: 1px;'>Tổng Học Viên: <font size='4'><strong>" . number_format($totalAmount, 0, '.', ',') . "</strong></font></br>Tổng Tiền: <font size='4'><strong>" . number_format($totalIncome, 0, '.', ',') . " VNĐ</strong></font></div>" . $tempInfo;
                                 echo("<div class='row'>" . $tempInfo . "</div>");
                             } else {
                                 $tempInfo .= "<div style='width: 25%; display: inline-block; margin-left: 5px;' class='alert alert-danger'><font size='4'><strong>Không có dữ liệu tiền dạy tháng ".$monthFilter."/".$yearFilter."</strong></font></div>";

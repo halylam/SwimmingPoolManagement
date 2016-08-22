@@ -291,7 +291,7 @@ class DBUtil extends mysqli {
     }
     
     public function getTeacherPlanInfo($month, $year) {
-        return $this->query("select sum(tp.fee*tp.rate/100) as total, t.name as name, count(*) as amount  FROM teacherplan tp"
+		return $this->query("select sum((tp.fee*(100-tp.rate))/100) as totalIncome, sum(tp.fee*tp.rate/100) as total, t.name as name, count(*) as amount  FROM teacherplan tp"
                 . " LEFT JOIN teacher t ON tp.idTeacher = t.idTeacher where MONTH(tp.endDate) = ".$month." and YEAR(tp.endDate) = ".$year." group by tp.idTeacher");
     }
     
