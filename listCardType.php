@@ -25,39 +25,43 @@ and open the template in the editor.
     <body>
         <?php include 'header.php' ?>
         <h2 style="color: #188420;"><center>DANH SÁCH LOẠI THẺ</center></h2>
-        
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <input id="filter" type="text" class="form-control" placeholder="Nhập tiêu chí lọc..." />
             </div>
             <table class="table">
                 <tr>
-                <th>Mã Loại Thẻ</th>
-                <th>Tên Loại Thẻ</th>
-                <th>Giá</th>
-                <th>Thao tác</th>
+                    <th>Mã Loại Thẻ</th>
+                    <th>Tên Loại Thẻ</th>
+                    <th>Giá</th>
+                    <th>Thao tác</th>
 
-            </tr>
-            <?php
-            $listCardType = DBUtil::getInstance()->getListCardType();
 
-            while ($row = mysqli_fetch_array($listCardType)) {
-                $idCardType = $row["idCardType"];
-                echo "<tr><td>" . htmlentities($idCardType) . "</td>";
-                echo "<td>" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</td>";
-                echo "<td>" . htmlentities($row["price"]) . "</td>";
-               
-                echo "<td><a href='editCardType.php?idCardType=$idCardType'><i class='glyphicon glyphicon-pencil'></i></a>"
-                    . "<a href='deleteCardType.php?idCardType=" . $idCardType . "' onClick=\"javascript:return confirm('Bạn có chắc chắn xóa loại thẻ ko?');\">"
-                        . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td><tr>";
-            }
-            mysqli_free_result($listCardType);
-            ?>
+                </tr>
+                <?php
+                $listCardType = DBUtil::getInstance()->getListCardType();
+
+                while ($row = mysqli_fetch_array($listCardType)) {
+                    $idCardType = $row["idCardType"];
+                    echo "<tr><td>" . htmlentities($idCardType) . "</td>";
+                    echo "<td>" . htmlentities($row["typeName"], ENT_QUOTES, 'utf-8') . "</td>";
+                    echo "<td>" . htmlentities($row["price"]) . "</td>";
+                    if ($userType == 'Admin') {
+                        echo "<td><a href='editCardType.php?idCardType=$idCardType'><i class='glyphicon glyphicon-pencil'></i></a>"
+                        . "<a href='deleteCardType.php?idCardType=" . $idCardType . "' onClick=\"javascript:return confirm('Bạn có chắc chắn xóa loại thẻ ko?');\">"
+                        . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
+                    } else {
+                        echo "<td></td></tr>" ;
+                    }
+                }
+                mysqli_free_result($listCardType);
+                ?>
             </table>
         </div>
-        
+
         <br/>
-        <input class="btn btn-success" type="button" value="Thêm mới loại thẻ" onClick="document.location.href = 'newCardType.php'" />     
+        <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button'; else echo 'hidden'; ?>" value="Thêm mới loại thẻ" onClick="document.location.href = 'newCardType.php'" />     
 
         <input class="btn btn-success" type="button" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
 

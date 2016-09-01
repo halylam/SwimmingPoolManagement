@@ -60,9 +60,13 @@ and open the template in the editor.
                         echo "<td>" . date('d-m-Y H:i:s', strtotime(htmlentities($row["endDate"]))) . "</td>";
                         echo "<td>" . number_format($row['fee'], 0, '.', ',') . "</td>";
                         echo "<td>" . htmlentities($row["rate"]) . "</td>";
-                        echo "<td><a href='editTeacherPlan.php?id=$id'><i class='glyphicon glyphicon-pencil'></i></a>"
-                        . "<a href='deleteTeacherPlan.php?id=" . $id . "' onClick=\"javascript:return confirm('Bạn có chắc chắn lịch dạy ko?');\">"
-                        . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
+                        if ($userType == 'Admin') {
+                            echo "<td><a href='editTeacherPlan.php?id=$id'><i class='glyphicon glyphicon-pencil'></i></a>"
+                            . "<a href='deleteTeacherPlan.php?id=" . $id . "' onClick=\"javascript:return confirm('Bạn có chắc chắn lịch dạy ko?');\">"
+                            . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
+                        } else {
+                            echo "<td></td></tr>";
+                        }
                     }
                     mysqli_free_result($listTeacherPlan);
                     ?>
@@ -72,7 +76,8 @@ and open the template in the editor.
             </table>
         </div>
         <br/>
-        <input class="btn btn-success" type="button" value="Đăng ký lịch dạy" onClick="document.location.href = 'newTeacherPlan.php'" />     
+        <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button';
+                    else echo 'hidden'; ?>" value="Đăng ký lịch dạy" onClick="document.location.href = 'newTeacherPlan.php'" />     
 
         <input class="btn btn-success" type="button" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
 

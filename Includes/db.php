@@ -121,6 +121,10 @@ class DBUtil extends mysqli {
         }
     }
     
+    public function getLastTransaction() {
+        $result = $this->query("select * from transaction t where t.idTran = (SELECT max(tt.idTran) FROM transaction tt)");
+        return $result->fetch_assoc();
+    }    
     
     public function getListTransaction($login, $typeName, $from, $to) {
         $query = "SELECT * FROM transaction WHERE 1=1";

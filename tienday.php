@@ -89,7 +89,7 @@ and open the template in the editor.
                             }
                             mysqli_free_result($listTeacherPlanInfo);
                             if($tempInfo != '') {
-								$tempInfo = "<div style='width: 20%; display: inline-block; margin-left: 5px;' class='alert alert-info'><font size='4' color='red'><strong>Thu nhập từ việc dạy</strong></font><hr style='margin: 5px; background-color: #419641; height: 1px;'>Tổng Học Viên: <font size='4'><strong>" . number_format($totalAmount, 0, '.', ',') . "</strong></font></br>Tổng Tiền: <font size='4'><strong>" . number_format($totalIncome, 0, '.', ',') . " VNĐ</strong></font></div>" . $tempInfo;
+								$tempInfo = "<div style='width: 20%; display: inline-block; margin-left: 5px;' class='alert alert-info'><font size='4' color='red'><strong>Thu Nhập Từ Việc Dạy</strong></font><hr style='margin: 5px; background-color: #419641; height: 1px;'>Tổng Học Viên: <font size='4'><strong>" . number_format($totalAmount, 0, '.', ',') . "</strong></font></br>Tổng Tiền: <font size='4'><strong>" . number_format($totalIncome, 0, '.', ',') . " VNĐ</strong></font></div>" . $tempInfo;
                                 echo("<div class='row'>" . $tempInfo . "</div>");
                             } else {
                                 $tempInfo .= "<div style='width: 25%; display: inline-block; margin-left: 5px;' class='alert alert-danger'><font size='4'><strong>Không có dữ liệu tiền dạy tháng ".$monthFilter."/".$yearFilter."</strong></font></div>";

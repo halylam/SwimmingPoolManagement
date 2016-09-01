@@ -89,7 +89,7 @@ and open the template in the editor.
 
                 <div class="form-group"> 
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Lưu chỉnh sửa</button> 
+                        <input class="btn btn-success" type="<?php if ($userType == 'Admin' || 1==1) echo 'submit'; else echo 'hidden'; ?>" value="Lưu chỉnh sửa" />     
                         <input type="button" class="btn btn-success" value="Trở lại" onClick="history.back();" />
                     </div>
                 </div>

@@ -64,9 +64,13 @@ and open the template in the editor.
                             echo "<td>Có</td>";
                         }
                         echo "<td>" . htmlentities($row["remainTimes"]) . "</td>";
-                        echo "<td><a href='editCard.php?idCard=$idCard'><i class='glyphicon glyphicon-pencil'></i></a>"
-                        . "<a href='deleteCard.php?idCard=" . $idCard . "' onClick=\"javascript:return confirm('Bạn có chắc chắn xóa thẻ ko?');\">"
-                        . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
+                        if ($userType == 'Admin' || 1==1) {
+                            echo "<td><a href='editCard.php?idCard=$idCard'><i class='glyphicon glyphicon-pencil'></i></a>"
+                            . "<a href='deleteCard.php?idCard=" . $idCard . "' onClick=\"javascript:return confirm('Bạn có chắc chắn xóa thẻ ko?');\">"
+                            . "<i style='margin-left: 15px; color: red;' class='glyphicon glyphicon-remove'></i></a></td></tr>";
+                        } else {
+                            echo "<td></td></tr>" ;
+                        }
                     }
                     mysqli_free_result($listCard);
                     ?>
@@ -76,7 +80,7 @@ and open the template in the editor.
             </table>
         </div>
         <br/>
-        <input class="btn btn-success" type="button" value="Đăng ký mới thẻ" onClick="document.location.href = 'newCard.php'" />     
+        <input class="btn btn-success" type="<?php if ($userType == 'Admin' || 1==1) echo 'button'; else echo 'hidden'; ?>" value="Đăng ký mới thẻ" onClick="document.location.href = 'newCard.php'" />     
 
         <input class="btn btn-success" type="button" value="Trang chủ" onClick="document.location.href = 'mainPage.php'" />
 
