@@ -5,9 +5,15 @@ require_once("Includes/db.php");
 if (isset($_SESSION['userID'])) {
     $idUser = $_SESSION['userID'];
     $fullname = $_SESSION['fullname'];
+	$userType = $_SESSION['userType'];
 } else {
     header('Location: index.php');
     exit;
+}
+
+if ($userType != 'Admin') {
+	header('Location: index.php');
+	exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {

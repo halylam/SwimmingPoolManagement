@@ -11,6 +11,10 @@ if (isset($_SESSION['userID'])) {
     header('Location: index.php');
     exit;
 }
+if ($userType != 'Admin') {
+	header('Location: index.php');
+	exit;
+}
 ?>
 <!DOCTYPE html>
 <!--

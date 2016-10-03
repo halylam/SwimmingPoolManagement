@@ -12,6 +12,10 @@ if (isset($_SESSION['userID'])) {
     header('Location: index.php');
     exit;
 }
+if ($userType != 'Admin') {
+	header('Location: index.php');
+	exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if (isset($_GET['idCardType'])) {

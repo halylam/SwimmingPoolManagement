@@ -12,6 +12,11 @@ if (isset($_SESSION['userID'])) {
     exit;
 }
 
+if ($userType != 'Admin') {
+	header('Location: index.php');
+	exit;
+}
+
 if ($userType == 'Admin' || 1==1) {
     DBUtil::getInstance()->deleteCard($_GET['idCard']);
 }

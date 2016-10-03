@@ -79,12 +79,14 @@ and open the template in the editor.
         <input class="btn btn-success" type="button" value="Thông Tin Cá Nhân" onClick="document.location.href = 'editUser.php?idUser=<?php echo $idUser; ?>&source=1'" />      
         <input class="btn btn-success" type="button" value="Danh sách loại thẻ" onClick="document.location.href = 'listCardType.php'" />     
         <input class="btn btn-success" type="button" value="Danh sách thẻ" onClick="document.location.href = 'listCard.php'" />     
-        <input class="btn btn-success" type="button" value="Thống kê báo cáo" onClick="document.location.href = 'thongke.php'" /></br></br>            
+        <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button';
+                    else echo 'hidden'; ?>" value="Thống kê báo cáo" onClick="document.location.href = 'thongke.php'" /></br></br>            
         <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button';
                     else echo 'hidden'; ?>" value="Danh sách nhân viên" onClick="document.location.href = 'listUser.php'" />     
         <input class="btn btn-success" type="button" value="Danh sách giáo viên" onClick="document.location.href = 'listTeacher.php'" />     
         <input class="btn btn-success" type="button" value="Danh sách giảng dạy" onClick="document.location.href = 'listTeacherPlan.php'" />     
-        <input class="btn btn-success" type="button" value="Thống kê tiền dạy" onClick="document.location.href = 'tienday.php'" />     
+        <input class="btn btn-success" type="<?php if ($userType == 'Admin') echo 'button';
+                    else echo 'hidden'; ?>" value="Thống kê tiền dạy" onClick="document.location.href = 'tienday.php'" />     
     </center>
 </body>
 
